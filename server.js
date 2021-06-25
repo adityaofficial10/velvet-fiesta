@@ -21,6 +21,7 @@ const resolvers = require('./graphql/resolvers');
 const server = new ApolloServer({
     typeDefs,
     resolvers,
+    introspection: true,
     context: ({ req, res }) => {
         const user = {};
         const token = req.get('Authorization') || '';
