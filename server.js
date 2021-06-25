@@ -19,10 +19,8 @@ const typeDefs = require('./graphql/schema');
 const resolvers = require('./graphql/resolvers');
 
 const server = new ApolloServer({
-    schema: {
-        typeDefs,
-        resolvers
-    },
+    typeDefs,
+    resolvers,
     introspection: true,
     context: ({ req, res }) => {
         const user = {};
