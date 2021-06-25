@@ -9,14 +9,19 @@ const app = express();
 const httpServer = http.createServer(app);
 const io = require('socket.io')(httpServer);
 
+
 io.on('connection', (socket) => {
     console.log('new client connected');
     console.log(socket);
     socket.emit('connection', null);
 });
 
+//app.use('/',require('./utilities/auth'));
+
 const typeDefs = require('./graphql/schema');
 const resolvers = require('./graphql/resolvers');
+
+require('./utilities/auth');
 
 const server = new ApolloServer({
     typeDefs,
@@ -43,6 +48,8 @@ server.applyMiddleware({
         origin: '5000'
     }
 });
+
+
 
 httpServer.listen({
     port: process.env.PORT || 8080
