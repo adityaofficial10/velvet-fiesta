@@ -4,11 +4,21 @@ const express = require('express');
 const { ApolloServer, schema } = require('apollo-server-express');
 const http = require('http');
 const path = require('path');
+const cors = require('cors');
 
 const app = express();
 const httpServer = http.createServer(app);
 const io = require('socket.io')(httpServer);
 
+var corsOptions = {
+    origin: 'http://localhost:3000',
+    optionsSuccessStatus: 200,
+    // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+  
+app.use(cors(corsOptions));
+  
+  
 
 io.on('connection', (socket) => {
     console.log('new client connected');
@@ -29,6 +39,12 @@ const server = new ApolloServer({
     introspection: true,
     playground: true,
     context: ({ req, res }) => {
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Access-Control-Allow-Credentials', true);
+        res.header(
+          'Access-Control-Allow-Headers',
+          'Origin, X-Requested-With, Content-Type, Accept',
+        );    
         let user = {};
         firebase.auth().onAuthStateChanged((userObj) => {
             if (userObj) {

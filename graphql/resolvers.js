@@ -12,18 +12,18 @@ const resolvers = {
             let res = {
                 uid: obj.uid,
                 email: email,
-                phoneNumber: obj.phoneNumber,
-                displayName: obj.displayName
+                phoneNumber: obj.user.phoneNumber,
+                displayName: obj.user.displayName
             };
             return res;
         },
         login: async function(root, { email, password }, { user }) {
             let obj = await login(email, password);
             let res = {
-                uid: obj.uid,
+                uid: obj.user.uid,
                 email: email,
-                phoneNumber: obj.phoneNumber,
-                displayName: obj.displayName
+                phoneNumber: obj.user.phoneNumber,
+                displayName: obj.user.displayName
             };
             return res;
         },
