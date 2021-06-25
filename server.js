@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
 const http = require('http');
@@ -41,5 +43,5 @@ server.applyMiddleware({
 });
 
 httpServer.listen({
-    port: 4000
+    port: process.env.PORT || 8080
 }, () => console.log(`Server running on port ${server.graphqlPath}`));
