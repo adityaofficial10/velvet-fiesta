@@ -21,7 +21,7 @@ io.on('connection', (socket) => {
 const typeDefs = require('./graphql/schema');
 const resolvers = require('./graphql/resolvers');
 
-require('./utilities/auth');
+const {getCurrentUser, firebase} = require('./utilities/auth');
 
 const server = new ApolloServer({
     typeDefs,
@@ -29,12 +29,15 @@ const server = new ApolloServer({
     introspection: true,
     playground: true,
     context: ({ req, res }) => {
-        const user = {};
-        const token = req.get('Authorization') || '';
-        token && jwt.verify(token, process.env.SECRET_KEY, function (err, decoded) {
-            // add user id to request
-            user.id = decoded.id;
-            user.loggedIn = true;
+        let user = {};
+        firebase.auth().onAuthStateChanged((userObj) => {
+            if (userObj) {
+              user.id = userObj.uid;
+              user.email = userObj.email;
+              console.log(user);
+            } else {
+              console.log("No user logged in!");
+            }
         });
         return { user };
     }
