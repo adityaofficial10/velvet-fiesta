@@ -21,6 +21,8 @@ const resolvers = require('./graphql/resolvers');
 const server = new ApolloServer({
     typeDefs,
     resolvers,
+    introspection: true,
+    playground: true,
     context: ({ req, res }) => {
         const user = {};
         const token = req.get('Authorization') || '';
@@ -35,7 +37,7 @@ const server = new ApolloServer({
 
 server.applyMiddleware({
     app,
-    path: '/graphql',
+    path: '/',
     cors: {
         credentials: true,
         origin: '5000'
