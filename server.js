@@ -1,7 +1,7 @@
 require('dotenv').config();
-
+// Deployed Link: "https://velvet-gql.as.r.appspot.com"
 const express = require('express');
-const { ApolloServer } = require('apollo-server-express');
+const { ApolloServer, schema } = require('apollo-server-express');
 const http = require('http');
 const path = require('path');
 
