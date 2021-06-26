@@ -10,7 +10,7 @@ const resolvers = {
         register: async function(root, { email, password }, { user }) {
             let obj = await signup(email, password);
             let res = {
-                uid: obj.uid,
+                uid: obj.user.uid,
                 email: email,
                 phoneNumber: obj.user.phoneNumber,
                 displayName: obj.user.displayName
