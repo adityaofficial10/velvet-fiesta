@@ -14,7 +14,8 @@ Backend Repository
 1. Blog => [ 'id', 'user_id', 'title', 'content', 'description', 'imageUrl']
 2. Chat Rooms => ['id', 'socket_id', 'name', 'room_type', ]
 
-##Team Members
+## Team Members
+
 Adita R. Rudra
 Rajat Partani
 Rohit Parihar
