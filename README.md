@@ -19,7 +19,7 @@ https://velvet-fiesta.herokuapp.com/
 
 ## Team Members
 
-1. Adita R. Rudra
+1. Aditya R Rudra
 2. Rajat Partani
 3. Rohit Parihar
 4. Satvik Singh
