@@ -16,7 +16,7 @@ Backend Repository
 
 ## Team Members
 
-Adita R. Rudra
-Rajat Partani
-Rohit Parihar
-Satvik Singh
+1. Adita R. Rudra
+2. Rajat Partani
+3. Rohit Parihar
+4. Satvik Singh
