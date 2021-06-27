@@ -11,7 +11,7 @@ const app = express();
 const httpServer = http.createServer(app);
 
 var corsOptions = {
-    origin: 'https://velvet-fiesta.herokuapp.com',
+    origin: 'http://www.celebrate-your-identity-with.tech/',
     optionsSuccessStatus: 200,
     // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
