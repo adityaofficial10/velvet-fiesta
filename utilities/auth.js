@@ -1,8 +1,6 @@
 var firebase = require("firebase/app");
-
 // Add the Firebase products that you want to use
 require("firebase/auth");
-require("firebase/firestore");
 
 const firebaseConfig = {
     apiKey: "AIzaSyCXnR4jzGDqjfolEwpMYP2wd6A23Skjryk",
@@ -15,6 +13,7 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
+
 
 async function signup(email,password){
     let user = await firebase.auth().createUserWithEmailAndPassword(email, password).catch((error) => {
@@ -44,6 +43,7 @@ async function signout(){
     });
 }
 
+
 login('adityalm1@gmail.com', '123456').then((us) => {
     firebase.auth().onAuthStateChanged((user) => {
         if (user) {
@@ -68,5 +68,5 @@ module.exports ={
     signout,
     login,
     getCurrentUser,
-    firebase
-}
+    firebase,
+};

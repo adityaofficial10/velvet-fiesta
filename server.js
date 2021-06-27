@@ -5,33 +5,25 @@ const { ApolloServer, schema } = require('apollo-server-express');
 const http = require('http');
 const path = require('path');
 const cors = require('cors');
+const db = require('./database/index');
 
 const app = express();
 const httpServer = http.createServer(app);
-const io = require('socket.io')(httpServer);
 
 var corsOptions = {
     origin: 'http://localhost:3000',
     optionsSuccessStatus: 200,
     // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
-  
-app.use(cors(corsOptions));
-  
-  
 
-io.on('connection', (socket) => {
-    console.log('new client connected');
-    console.log(socket);
-    socket.emit('connection', null);
-});
+app.use(cors(corsOptions));
 
 //app.use('/',require('./utilities/auth'));
 
 const typeDefs = require('./graphql/schema');
 const resolvers = require('./graphql/resolvers');
 
-const {getCurrentUser, firebase} = require('./utilities/auth');
+const { getCurrentUser, firebase } = require('./utilities/auth');
 
 const server = new ApolloServer({
     typeDefs,
@@ -42,21 +34,51 @@ const server = new ApolloServer({
         res.setHeader('Access-Control-Allow-Origin', '*');
         res.setHeader('Access-Control-Allow-Credentials', true);
         res.header(
-          'Access-Control-Allow-Headers',
-          'Origin, X-Requested-With, Content-Type, Accept',
-        );    
+            'Access-Control-Allow-Headers',
+            'Origin, X-Requested-With, Content-Type, Accept',
+        );
         let user = {};
         firebase.auth().onAuthStateChanged((userObj) => {
             if (userObj) {
-              user.id = userObj.uid;
-              user.email = userObj.email;
-              console.log(user);
+                user.id = userObj.uid;
+                user.email = userObj.email;
+                console.log(user);
             } else {
-              console.log("No user logged in!");
+                console.log("No user logged in!");
+                user.id = null;
             }
         });
         return { user };
     }
+});
+
+app.get('/user', (req, res) => {
+    firebase.auth().onAuthStateChanged(async (userObj) => {
+        if (userObj) {
+            let users = await db.collection('users').where('uid', '==', userObj.uid).get();
+            let user = {};
+            users.forEach((doc) => {
+                user = doc.data();
+            });
+            res.send(user);
+        } else {
+            let user = {};
+            console.log("No user logged in!");
+            user.uid = null;
+            res.send(user);
+        }
+    });
+});
+
+app.get('/getAllBlogs', async (req, res) => {
+    const blog = db.collection('blogs');
+    const data = await blog.get();
+    let blogs = [];
+    data.forEach(doc => {
+        console.log(doc.id, '=>', doc.data());
+        blogs.push(doc.data());
+    });
+    res.send(blogs);
 });
 
 server.applyMiddleware({

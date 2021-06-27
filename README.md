@@ -12,4 +12,4 @@
 ## Tables
 
 1. Blog => [ 'id', 'user_id', 'title', 'content', 'description', 'imageUrl']
-2. Chat Rooms => ['id', 'socket_id', 'name', '']
+2. Chat Rooms => ['id', 'socket_id', 'name', 'room_type', ]
